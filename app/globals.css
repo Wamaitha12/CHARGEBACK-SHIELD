@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design tokens ───────────────────────────────────────── */
+:root {
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'DM Mono', monospace;
+
+  /* Surface tokens — light mode */
+  --color-surface:              255 255 255;   /* #ffffff  — card / sidebar / topbar  */
+  --color-surface-secondary:    248 250 252;   /* #f8fafc  — page background          */
+  --color-surface-tertiary:     241 245 249;   /* #f1f5f9  — hover / pressed          */
+  --color-surface-border:       226 232 240;   /* #e2e8f0  — default border           */
+  --color-surface-border-strong:203 213 225;   /* #cbd5e1  — strong border            */
+
+  /* Ink tokens — light mode */
+  --color-ink:                  15  23  42;    /* #0f172a  — primary text             */
+  --color-ink-secondary:        71  85  105;   /* #475569  — secondary text           */
+  --color-ink-tertiary:         148 163 184;   /* #94a3b8  — tertiary / labels        */
+  --color-ink-placeholder:      203 213 225;   /* #cbd5e1  — placeholder              */
+}
+
+.dark {
+  /* Surface tokens — dark mode */
+  --color-surface:              30  41  59;    /* slate-800 — card / sidebar / topbar */
+  --color-surface-secondary:    15  23  42;    /* slate-900 — page background         */
+  --color-surface-tertiary:     51  65  85;    /* slate-700 — hover / pressed         */
+  --color-surface-border:       51  65  85;    /* slate-700 — default border          */
+  --color-surface-border-strong:71  85  105;   /* slate-600 — strong border           */
+
+  /* Ink tokens — dark mode */
+  --color-ink:                  241 245 249;   /* slate-100 — primary text            */
+  --color-ink-secondary:        148 163 184;   /* slate-400 — secondary text          */
+  --color-ink-tertiary:         100 116 139;   /* slate-500 — tertiary / labels       */
+  --color-ink-placeholder:      71  85  105;   /* slate-600 — placeholder             */
+}
+
+/* ─── Base ────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: rgb(var(--color-surface-secondary));
+  color: rgb(var(--color-ink));
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgb(var(--color-surface-border-strong)); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--color-ink-tertiary)); }
+
+/* ─── Focus ring ──────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ─── Selection ───────────────────────────────────────────── */
+::selection { background-color: #bfdbfe; color: #1e40af; }
+
+/* ─── Component classes ───────────────────────────────────── */
+@layer components {
+  /* Card */
+  .card {
+    @apply bg-surface rounded-xl border border-surface-border shadow-card;
+  }
+  .card-hover {
+    @apply card transition-all duration-150 hover:shadow-card-hover hover:-translate-y-px;
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium text-sm
+           transition-all duration-150 focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply btn bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800 shadow-sm;
+  }
+  .btn-secondary {
+    @apply btn bg-surface text-ink border border-surface-border
+           hover:bg-surface-tertiary active:bg-surface-tertiary shadow-sm;
+  }
+  .btn-ghost {
+    @apply btn text-ink-secondary hover:bg-surface-tertiary hover:text-ink active:bg-surface-tertiary;
+  }
+  .btn-danger {
+    @apply btn bg-danger-500 text-white hover:bg-danger-600 active:bg-danger-700 shadow-sm;
+  }
+  .btn-lg { @apply px-6 py-3 text-base rounded-xl; }
+  .btn-sm { @apply px-3 py-1.5 text-xs rounded-lg; }
+
+  /* Input */
+  .input {
+    @apply w-full px-3 py-2 rounded-lg border border-surface-border bg-surface text-sm text-ink
+           placeholder:text-ink-placeholder
+           focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent
+           transition-all duration-150;
+  }
+  .input-error { @apply border-danger-500 focus:ring-danger-500; }
+
+  /* Label */
+  .label { @apply block text-sm font-medium text-ink-secondary mb-1.5; }
+
+  /* Badge */
+  .badge { @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium; }
+  .status-badge { @apply badge; }
+
+  /* Table */
+  .table-container { @apply overflow-x-auto -mx-6 px-6; }
+  .table { @apply w-full text-sm; }
+  .table th {
+    @apply text-left text-xs font-semibold text-ink-tertiary uppercase tracking-wider
+           px-4 py-3 border-b border-surface-border;
+  }
+  .table td { @apply px-4 py-4 border-b border-surface-border last:border-0; }
+  .table tr:last-child td { @apply border-0; }
+  .table tbody tr { @apply transition-colors duration-100 hover:bg-surface-tertiary/60; }
+
+  /* Shimmer */
+  .shimmer {
+    background: linear-gradient(90deg,
+      rgb(var(--color-surface-tertiary)) 25%,
+      rgb(var(--color-surface-border)) 37%,
+      rgb(var(--color-surface-tertiary)) 63%
+    );
+    background-size: 400% 100%;
+    animation: shimmer 1.4s ease infinite;
+  }
+}
+
+/* ─── Page transition ─────────────────────────────────────── */
+.page-enter { animation: slideUp 0.25s ease-out; }
+
+/* ─── Recharts ────────────────────────────────────────────── */
+.recharts-tooltip-wrapper {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px -2px rgb(0 0 0 / 0.12) !important;
+}
+
+/* ─── Sidebar items ───────────────────────────────────────── */
+.sidebar-item {
+  @apply flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150;
+}
+.sidebar-item:hover {
+  @apply bg-surface-tertiary text-ink;
+}
+.sidebar-item.active {
+  @apply bg-brand-50 text-brand-700;
+}
+.dark .sidebar-item.active {
+  background-color: rgb(30 58 138 / 0.35);
+  color: #93c5fd;
+}
+.sidebar-item.active svg   { @apply text-brand-600; }
+.dark .sidebar-item.active svg { color: #93c5fd; }
