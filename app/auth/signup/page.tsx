@@ -62,8 +62,8 @@ export default function SignupPage() {
         <div className="w-14 h-14 bg-success-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <CheckCircle2 className="w-7 h-7 text-success-600" />
         </div>
-        <h2 className="text-xl font-bold text-ink mb-2">Check your email</h2>
-        <p className="text-ink-secondary text-sm mb-6">
+        <h2 className="text-xl font-bold text-slate-900 mb-2">Check your email</h2>
+        <p className="text-slate-600 text-sm mb-6">
           We sent a verification link to <strong>{email}</strong>. Click the link to activate your account.
         </p>
         <Link href="/auth/login" className="btn-primary w-full justify-center">
@@ -76,8 +76,8 @@ export default function SignupPage() {
   return (
     <div className="animate-fade-in">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-ink mb-2">Create your account</h1>
-        <p className="text-ink-secondary text-sm">Start protecting your revenue — free for 14 days</p>
+        <h1 className="text-2xl font-bold text-slate-900 mb-2">Create your account</h1>
+        <p className="text-slate-600 text-sm">Start protecting your revenue — free for 14 days</p>
       </div>
 
       <form onSubmit={handleSignup} className="space-y-5">
@@ -131,7 +131,7 @@ export default function SignupPage() {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-tertiary hover:text-ink-secondary"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-600"
             >
               {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
             </button>
@@ -146,7 +146,7 @@ export default function SignupPage() {
                 <div
                   key={i}
                   className={`h-1 flex-1 rounded-full transition-colors ${
-                    met ? 'bg-success-500' : 'bg-surface-border'
+                    met ? 'bg-success-500' : 'bg-white-border'
                   }`}
                 />
               ))}
@@ -169,7 +169,7 @@ export default function SignupPage() {
           )}
         </button>
 
-        <p className="text-xs text-ink-tertiary text-center">
+        <p className="text-xs text-slate-500 text-center">
           By signing up you agree to our{' '}
           <Link href="/terms" className="text-brand-600 hover:underline">Terms of Service</Link>
           {' '}and{' '}
@@ -177,7 +177,7 @@ export default function SignupPage() {
         </p>
       </form>
 
-      <p className="text-sm text-ink-secondary text-center mt-6">
+      <p className="text-sm text-slate-600 text-center mt-6">
         Already have an account?{' '}
         <Link href="/auth/login" className="text-brand-600 font-medium hover:text-brand-700">
           Sign in

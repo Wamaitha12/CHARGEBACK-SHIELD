@@ -167,13 +167,13 @@ export default function LandingPage() {
             <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center">
               <ShieldCheck className="w-5 h-5 text-white" />
             </div>
-            <span className="font-semibold text-ink text-lg tracking-tight">Chargeback Shield</span>
+            <span className="font-semibold text-slate-900 text-lg tracking-tight">Chargeback Shield</span>
           </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-ink-secondary">
-            <a href="#how-it-works" className="hover:text-ink transition-colors">How it works</a>
-            <a href="#features"     className="hover:text-ink transition-colors">Features</a>
-            <a href="#pricing"      className="hover:text-ink transition-colors">Pricing</a>
-            <Link href="/calculator" className="hover:text-ink transition-colors">Calculator</Link>
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+            <a href="#how-it-works" className="hover:text-slate-900 transition-colors">How it works</a>
+            <a href="#features"     className="hover:text-slate-900 transition-colors">Features</a>
+            <a href="#pricing"      className="hover:text-slate-900 transition-colors">Pricing</a>
+            <Link href="/calculator" className="hover:text-slate-900 transition-colors">Calculator</Link>
           </div>
           <div className="flex items-center gap-3">
             <Link href="/auth/login"  className="btn-ghost text-sm font-medium px-4 py-2 rounded-lg hidden sm:block">Sign in</Link>
@@ -378,8 +378,8 @@ export default function LandingPage() {
             <div className="inline-flex items-center gap-2 text-xs font-semibold text-brand-600 uppercase tracking-widest bg-brand-50 border border-brand-100 px-3 py-1.5 rounded-full mb-4">
               The difference
             </div>
-            <h2 className="text-4xl font-bold text-ink mb-3">From Chaos To Revenue Visibility</h2>
-            <p className="text-ink-secondary text-lg">Most merchants are still managing disputes the hard way.</p>
+            <h2 className="text-4xl font-bold text-slate-900 mb-3">From Chaos To Revenue Visibility</h2>
+            <p className="text-slate-600 text-lg">Most merchants are still managing disputes the hard way.</p>
           </div>
 
           {/* Cards */}
@@ -475,13 +475,13 @@ export default function LandingPage() {
               Start protecting revenue free
               <ArrowRight className="w-5 h-5" />
             </Link>
-            <p className="text-sm text-ink-tertiary mt-3">No credit card required · Setup in minutes</p>
+            <p className="text-sm text-slate-500 mt-3">No credit card required · Setup in minutes</p>
           </div>
         </div>
       </section>
 
       {/* ── Shopify Integration ───────────────────────────────── */}
-      <section className="py-24 px-6 bg-surface-secondary">
+      <section className="py-24 px-6 bg-slate-50">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -489,8 +489,8 @@ export default function LandingPage() {
                 <ShoppingBag className="w-3.5 h-3.5" />
                 Shopify integration
               </div>
-              <h2 className="text-4xl font-bold text-ink mb-5">Connect Your Shopify Store In Minutes</h2>
-              <p className="text-ink-secondary text-lg mb-6 leading-relaxed">
+              <h2 className="text-4xl font-bold text-slate-900 mb-5">Connect Your Shopify Store In Minutes</h2>
+              <p className="text-slate-600 text-lg mb-6 leading-relaxed">
                 Automatically import disputes directly from Shopify so your team stays organized without manual entry.
                 Every new dispute appears in your dashboard the moment it's opened.
               </p>
@@ -501,7 +501,7 @@ export default function LandingPage() {
                   'Zero manual data entry required',
                   'Instant dispute notifications',
                 ].map(item => (
-                  <li key={item} className="flex items-center gap-2.5 text-sm text-ink-secondary">
+                  <li key={item} className="flex items-center gap-2.5 text-sm text-slate-600">
                     <CheckCircle2 className="w-4 h-4 text-success-500 flex-shrink-0" />
                     {item}
                   </li>
@@ -526,13 +526,13 @@ export default function LandingPage() {
                       <step.icon className={`w-5 h-5 ${step.iconColor}`} />
                     </div>
                     <div>
-                      <div className="text-sm font-semibold text-ink">{step.label}</div>
-                      <div className="text-xs text-ink-tertiary mt-0.5">{step.sub}</div>
+                      <div className="text-sm font-semibold text-slate-900">{step.label}</div>
+                      <div className="text-xs text-slate-500 mt-0.5">{step.sub}</div>
                     </div>
                   </div>
                   {i < arr.length - 1 && (
                     <div className="flex justify-center my-1">
-                      <div className="w-px h-4 bg-surface-border" />
+                      <div className="w-px h-4 bg-white-border" />
                     </div>
                   )}
                 </div>
@@ -549,12 +549,12 @@ export default function LandingPage() {
             <div className="inline-flex items-center gap-2 text-xs font-semibold text-brand-600 uppercase tracking-widest bg-brand-50 border border-brand-100 px-3 py-1.5 rounded-full mb-4">
               Simple process
             </div>
-            <h2 className="text-4xl font-bold text-ink mb-3">How It Works</h2>
-            <p className="text-ink-secondary text-lg">Up and running in minutes, not days.</p>
+            <h2 className="text-4xl font-bold text-slate-900 mb-3">How It Works</h2>
+            <p className="text-slate-600 text-lg">Up and running in minutes, not days.</p>
           </div>
 
           <div className="relative">
-            <div className="absolute left-8 top-12 bottom-12 w-px bg-surface-border hidden md:block" />
+            <div className="absolute left-8 top-12 bottom-12 w-px bg-white-border hidden md:block" />
             <div className="space-y-6">
               {[
                 { step: '01', title: 'Add Disputes',     desc: 'Log disputes manually or connect Shopify to auto-import every new case the moment it\'s opened.', color: 'bg-blue-600' },
@@ -565,9 +565,9 @@ export default function LandingPage() {
                   <div className={`w-16 h-16 rounded-2xl ${item.color} flex items-center justify-center flex-shrink-0 shadow-lg`}>
                     <span className="text-white font-bold text-lg">{item.step}</span>
                   </div>
-                  <div className="flex-1 bg-surface border border-surface-border rounded-2xl p-6 hover:border-brand-200 hover:shadow-card transition-all duration-200">
-                    <h3 className="text-lg font-semibold text-ink mb-2">{item.title}</h3>
-                    <p className="text-ink-secondary leading-relaxed">{item.desc}</p>
+                  <div className="flex-1 bg-white border border-slate-200 rounded-2xl p-6 hover:border-brand-200 hover:shadow-card transition-all duration-200">
+                    <h3 className="text-lg font-semibold text-slate-900 mb-2">{item.title}</h3>
+                    <p className="text-slate-600 leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
               ))}
@@ -577,7 +577,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── Features ─────────────────────────────────────────── */}
-      <section id="features" className="py-24 px-6 bg-surface-secondary relative overflow-hidden">
+      <section id="features" className="py-24 px-6 bg-slate-50 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(59,130,246,0.05) 0%, transparent 70%)' }} />
         <div className="max-w-6xl mx-auto relative">
           <div className="text-center max-w-2xl mx-auto mb-16">
@@ -585,13 +585,13 @@ export default function LandingPage() {
               <Zap className="w-3.5 h-3.5" />
               Revenue protection platform
             </div>
-            <h2 className="text-4xl font-bold text-ink mb-4">Everything You Need To Stay In Control</h2>
-            <p className="text-lg text-ink-secondary">One platform to stop revenue loss from disputes — built for the way real merchants operate.</p>
+            <h2 className="text-4xl font-bold text-slate-900 mb-4">Everything You Need To Stay In Control</h2>
+            <p className="text-lg text-slate-600">One platform to stop revenue loss from disputes — built for the way real merchants operate.</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-5">
             {FEATURES.map(feature => (
-              <div key={feature.title} className="group relative bg-surface rounded-2xl border border-surface-border p-7 hover:border-brand-200 hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-200 flex gap-5">
+              <div key={feature.title} className="group relative bg-white rounded-2xl border border-slate-200 p-7 hover:border-brand-200 hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-200 flex gap-5">
                 {feature.tag && (
                   <span className="absolute top-4 right-4 text-xs font-semibold text-brand-600 bg-brand-50 border border-brand-100 px-2 py-0.5 rounded-full">{feature.tag}</span>
                 )}
@@ -599,8 +599,8 @@ export default function LandingPage() {
                   <feature.icon className={`w-6 h-6 ${feature.iconColor}`} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-ink mb-2 text-base">{feature.title}</h3>
-                  <p className="text-sm text-ink-secondary leading-relaxed">{feature.description}</p>
+                  <h3 className="font-semibold text-slate-900 mb-2 text-base">{feature.title}</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed">{feature.description}</p>
                 </div>
               </div>
             ))}
@@ -616,27 +616,27 @@ export default function LandingPage() {
               <Star className="w-3.5 h-3.5 fill-brand-400 text-brand-400" />
               Customer stories
             </div>
-            <h2 className="text-4xl font-bold text-ink mb-3">Trusted by merchants serious about protecting revenue</h2>
+            <h2 className="text-4xl font-bold text-slate-900 mb-3">Trusted by merchants serious about protecting revenue</h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
             {TESTIMONIALS.map(t => (
-              <div key={t.author} className="group relative bg-surface rounded-2xl border border-surface-border p-7 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-200 flex flex-col">
+              <div key={t.author} className="group relative bg-white rounded-2xl border border-slate-200 p-7 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-200 flex flex-col">
                 <div className="absolute top-5 right-6 text-5xl font-serif text-brand-100 leading-none select-none">"</div>
                 <div className="flex gap-0.5 mb-5">
                   {Array.from({ length: t.stars }).map((_, i) => (
                     <Star key={i} className="w-4 h-4 fill-warning-400 text-warning-400" />
                   ))}
                 </div>
-                <p className="text-ink text-sm leading-relaxed flex-1 mb-4">{t.quote}</p>
+                <p className="text-slate-900 text-sm leading-relaxed flex-1 mb-4">{t.quote}</p>
                 <div className="inline-flex items-center gap-1.5 self-start bg-success-50 border border-success-200 text-success-700 text-xs font-semibold px-2.5 py-1 rounded-full mb-5">
                   <TrendingUp className="w-3 h-3" />{t.metric}
                 </div>
-                <div className="flex items-center gap-3 pt-5 border-t border-surface-border">
+                <div className="flex items-center gap-3 pt-5 border-t border-slate-200">
                   <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${t.color}`}>{t.initials}</div>
                   <div>
-                    <div className="text-sm font-semibold text-ink">{t.author}</div>
-                    <div className="text-xs text-ink-tertiary">{t.role}</div>
+                    <div className="text-sm font-semibold text-slate-900">{t.author}</div>
+                    <div className="text-xs text-slate-500">{t.role}</div>
                   </div>
                 </div>
               </div>
@@ -644,7 +644,7 @@ export default function LandingPage() {
           </div>
 
           {/* Trust bar */}
-          <div className="mt-14 flex flex-wrap items-center justify-center gap-10 text-sm text-ink-tertiary border-t border-surface-border pt-10">
+          <div className="mt-14 flex flex-wrap items-center justify-center gap-10 text-sm text-slate-500 border-t border-slate-200 pt-10">
             {[
               { val: '2,400+', label: 'merchants protected' },
               { val: '80%',    label: 'avg win rate' },
@@ -652,7 +652,7 @@ export default function LandingPage() {
               { val: '< 5 min', label: 'average setup time' },
             ].map(s => (
               <div key={s.label} className="flex items-center gap-2">
-                <span className="font-bold text-ink text-base">{s.val}</span>
+                <span className="font-bold text-slate-900 text-base">{s.val}</span>
                 <span>{s.label}</span>
               </div>
             ))}
@@ -661,14 +661,14 @@ export default function LandingPage() {
       </section>
 
       {/* ── Pricing ──────────────────────────────────────────── */}
-      <section id="pricing" className="py-24 px-6 bg-surface-secondary">
+      <section id="pricing" className="py-24 px-6 bg-slate-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <div className="inline-flex items-center gap-2 text-xs font-semibold text-brand-600 uppercase tracking-widest bg-brand-50 border border-brand-100 px-3 py-1.5 rounded-full mb-4">
               Pricing
             </div>
-            <h2 className="text-4xl font-bold text-ink mb-4">Start free, scale as you grow</h2>
-            <p className="text-lg text-ink-secondary">No hidden fees. No long-term contracts. Cancel any time.</p>
+            <h2 className="text-4xl font-bold text-slate-900 mb-4">Start free, scale as you grow</h2>
+            <p className="text-lg text-slate-600">No hidden fees. No long-term contracts. Cancel any time.</p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 items-start">
@@ -676,19 +676,19 @@ export default function LandingPage() {
               <div key={plan.name} className={`rounded-2xl border p-7 relative flex flex-col ${
                 plan.highlighted
                   ? 'bg-brand-600 border-brand-600 text-white shadow-2xl shadow-brand-200/40 scale-[1.02]'
-                  : 'bg-surface border-surface-border shadow-card'
+                  : 'bg-white border-slate-200 shadow-card'
               }`}>
                 {plan.badge && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-warning-500 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
                     {plan.badge}
                   </div>
                 )}
-                <div className={`text-xs font-semibold mb-2 uppercase tracking-wider ${plan.highlighted ? 'text-brand-200' : 'text-ink-tertiary'}`}>{plan.name}</div>
+                <div className={`text-xs font-semibold mb-2 uppercase tracking-wider ${plan.highlighted ? 'text-brand-200' : 'text-slate-500'}`}>{plan.name}</div>
                 <div className="flex items-baseline gap-1 mb-1">
-                  <span className={`text-3xl font-bold ${plan.highlighted ? 'text-white' : 'text-ink'}`}>{plan.price}</span>
-                  {plan.price !== 'Custom' && <span className={`text-sm ${plan.highlighted ? 'text-brand-200' : 'text-ink-tertiary'}`}>/{plan.period}</span>}
+                  <span className={`text-3xl font-bold ${plan.highlighted ? 'text-white' : 'text-slate-900'}`}>{plan.price}</span>
+                  {plan.price !== 'Custom' && <span className={`text-sm ${plan.highlighted ? 'text-brand-200' : 'text-slate-500'}`}>/{plan.period}</span>}
                 </div>
-                <p className={`text-sm mb-6 ${plan.highlighted ? 'text-brand-200' : 'text-ink-secondary'}`}>{plan.description}</p>
+                <p className={`text-sm mb-6 ${plan.highlighted ? 'text-brand-200' : 'text-slate-600'}`}>{plan.description}</p>
                 <Link href={plan.name === 'Enterprise' ? '/contact' : '/auth/signup'}
                   className={`btn w-full justify-center mb-7 ${
                     plan.highlighted
@@ -703,7 +703,7 @@ export default function LandingPage() {
                   {plan.features.map(f => (
                     <li key={f} className="flex items-center gap-2 text-sm">
                       <CheckCircle2 className={`w-4 h-4 flex-shrink-0 ${plan.highlighted ? 'text-brand-200' : 'text-success-500'}`} />
-                      <span className={plan.highlighted ? 'text-brand-100' : 'text-ink-secondary'}>{f}</span>
+                      <span className={plan.highlighted ? 'text-brand-100' : 'text-slate-600'}>{f}</span>
                     </li>
                   ))}
                 </ul>
@@ -739,7 +739,7 @@ export default function LandingPage() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 bg-white rounded-lg flex items-center justify-center">
-                <ShieldCheck className="w-4 h-4 text-ink" />
+                <ShieldCheck className="w-4 h-4 text-slate-900" />
               </div>
               <span className="text-white font-semibold">Chargeback Shield</span>
             </div>

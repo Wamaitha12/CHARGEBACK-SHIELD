@@ -17,7 +17,7 @@ export default function TermsPage() {
             <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center">
               <ShieldCheck className="w-5 h-5 text-white" />
             </div>
-            <span className="font-semibold text-ink text-lg tracking-tight">Chargeback Shield</span>
+            <span className="font-semibold text-slate-900 text-lg tracking-tight">Chargeback Shield</span>
           </Link>
           <div className="flex items-center gap-3">
             <Link href="/auth/login" className="btn-ghost text-sm font-medium px-4 py-2 rounded-lg">
@@ -35,14 +35,14 @@ export default function TermsPage() {
         <div className="max-w-3xl mx-auto">
           <div className="mb-10">
             <p className="text-sm font-semibold text-brand-600 uppercase tracking-wider mb-3">Legal</p>
-            <h1 className="text-4xl font-bold text-ink mb-4">Terms of Service</h1>
-            <p className="text-ink-secondary">Last updated: January 1, 2025</p>
+            <h1 className="text-4xl font-bold text-slate-900 mb-4">Terms of Service</h1>
+            <p className="text-slate-600">Last updated: January 1, 2025</p>
           </div>
 
-          <div className="space-y-10 text-ink-secondary leading-relaxed">
+          <div className="space-y-10 text-slate-600 leading-relaxed">
 
             <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">1. Acceptance of Terms</h2>
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">1. Acceptance of Terms</h2>
               <p>
                 By accessing or using Chargeback Shield ("Service"), you agree to be bound by these Terms of Service
                 ("Terms"). If you do not agree to these Terms, do not use the Service. These Terms apply to all
@@ -51,7 +51,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">2. Description of Service</h2>
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">2. Description of Service</h2>
               <p>
                 Chargeback Shield is a chargeback and dispute management platform that helps businesses track disputes,
                 organize evidence, and monitor win rates. We provide tools for evidence management, dispute timeline
@@ -61,7 +61,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">3. Account Registration</h2>
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">3. Account Registration</h2>
               <p className="mb-4">
                 To use the Service, you must create an account. You agree to:
               </p>
@@ -79,7 +79,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">4. Acceptable Use</h2>
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">4. Acceptable Use</h2>
               <p className="mb-4">You agree not to use the Service to:</p>
               <ul className="list-disc list-inside space-y-1.5 text-sm">
                 <li>Violate any applicable law or regulation</li>
@@ -94,7 +94,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">5. Subscription and Payment</h2>
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">5. Subscription and Payment</h2>
               <p className="mb-4">
                 Certain features of the Service require a paid subscription. By subscribing, you agree to:
               </p>
@@ -111,7 +111,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">6. Free Trial</h2>
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">6. Free Trial</h2>
               <p>
                 We may offer a free trial of paid features. At the end of the trial period, your account will
                 automatically convert to the applicable paid plan unless you cancel before the trial ends. We reserve
@@ -120,7 +120,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">7. Intellectual Property</h2>
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">7. Intellectual Property</h2>
               <p className="mb-4">
                 The Service and its original content, features, and functionality are owned by Chargeback Shield and
                 are protected by intellectual property laws. You may not copy, modify, distribute, or create derivative
@@ -133,7 +133,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">8. Disclaimers</h2>
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">8. Disclaimers</h2>
               <p className="mb-4">
                 Chargeback Shield is provided "as is" and "as available" without warranties of any kind, either express
                 or implied. We do not warrant that:
@@ -150,7 +150,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">9. Limitation of Liability</h2>
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">9. Limitation of Liability</h2>
               <p>
                 To the maximum extent permitted by law, Chargeback Shield shall not be liable for any indirect,
                 incidental, special, consequential, or punitive damages, including lost profits, lost revenue, or loss
@@ -160,7 +160,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">10. Termination</h2>
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">10. Termination</h2>
               <p>
                 You may cancel your account at any time from your account settings. We reserve the right to suspend or
                 terminate your access to the Service at our discretion, with or without notice, for conduct that we
@@ -170,7 +170,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">11. Governing Law</h2>
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">11. Governing Law</h2>
               <p>
                 These Terms shall be governed by and construed in accordance with applicable laws, without regard to
                 conflict of law provisions. Any disputes arising under these Terms shall be resolved through binding
@@ -179,7 +179,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">12. Changes to Terms</h2>
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">12. Changes to Terms</h2>
               <p>
                 We reserve the right to modify these Terms at any time. We will notify you of material changes via
                 email or in-app notification at least 14 days before the changes take effect. Your continued use of the
@@ -188,12 +188,12 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-ink mb-3">13. Contact</h2>
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">13. Contact</h2>
               <p>
                 Questions about these Terms? Please contact us:
               </p>
-              <div className="mt-4 p-4 bg-surface-secondary rounded-xl border border-surface-border text-sm space-y-1">
-                <p><strong className="text-ink">Chargeback Shield</strong></p>
+              <div className="mt-4 p-4 bg-slate-50 rounded-xl border border-slate-200 text-sm space-y-1">
+                <p><strong className="text-slate-900">Chargeback Shield</strong></p>
                 <p>Email: <a href="mailto:legal@chargebackshield.com" className="text-brand-600 hover:underline">legal@chargebackshield.com</a></p>
                 <p>Or visit our <Link href="/contact" className="text-brand-600 hover:underline">Contact page</Link></p>
               </div>
@@ -209,7 +209,7 @@ export default function TermsPage() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 bg-white rounded-lg flex items-center justify-center">
-                <ShieldCheck className="w-4 h-4 text-ink" />
+                <ShieldCheck className="w-4 h-4 text-slate-900" />
               </div>
               <span className="text-white font-semibold">Chargeback Shield</span>
             </div>

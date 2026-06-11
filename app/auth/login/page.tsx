@@ -39,8 +39,8 @@ export default function LoginPage() {
   return (
     <div className="animate-fade-in">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-ink mb-2">Welcome back</h1>
-        <p className="text-ink-secondary text-sm">Sign in to your Chargeback Shield account</p>
+        <h1 className="text-2xl font-bold text-slate-900 mb-2">Welcome back</h1>
+        <p className="text-slate-600 text-sm">Sign in to your Chargeback Shield account</p>
       </div>
 
       <form onSubmit={handleLogin} className="space-y-5">
@@ -85,7 +85,7 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-tertiary hover:text-ink-secondary"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-600"
             >
               {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
             </button>
@@ -108,7 +108,7 @@ export default function LoginPage() {
         </button>
       </form>
 
-      <p className="text-sm text-ink-secondary text-center mt-6">
+      <p className="text-sm text-slate-600 text-center mt-6">
         Don't have an account?{' '}
         <Link href="/auth/signup" className="text-brand-600 font-medium hover:text-brand-700">
           Create one free
@@ -116,8 +116,8 @@ export default function LoginPage() {
       </p>
 
       {/* Demo access */}
-      <div className="mt-8 pt-6 border-t border-surface-border">
-        <p className="text-xs text-ink-tertiary text-center mb-3">Want to explore first?</p>
+      <div className="mt-8 pt-6 border-t border-slate-200">
+        <p className="text-xs text-slate-500 text-center mb-3">Want to explore first?</p>
         <button
           onClick={() => {
             setEmail('demo@chargebackshield.com')

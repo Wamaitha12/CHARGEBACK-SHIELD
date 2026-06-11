@@ -38,7 +38,7 @@ export default function CalculatorPage() {
     new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(n)
 
   return (
-    <div className="min-h-screen bg-surface-secondary">
+    <div className="min-h-screen bg-slate-50">
       {/* Nav */}
       <nav className="bg-white border-b border-slate-100">
         <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -46,7 +46,7 @@ export default function CalculatorPage() {
             <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center">
               <ShieldCheck className="w-5 h-5 text-white" />
             </div>
-            <span className="font-semibold text-ink tracking-tight">Chargeback Shield</span>
+            <span className="font-semibold text-slate-900 tracking-tight">Chargeback Shield</span>
           </Link>
           <Link href="/auth/signup" className="btn-primary text-sm">
             Start Free <ArrowRight className="w-4 h-4" />
@@ -62,8 +62,8 @@ export default function CalculatorPage() {
             <Calculator className="w-3.5 h-3.5" />
             Free Tool
           </div>
-          <h1 className="text-4xl font-bold text-ink mb-3">Chargeback Loss Calculator</h1>
-          <p className="text-lg text-ink-secondary max-w-xl mx-auto">
+          <h1 className="text-4xl font-bold text-slate-900 mb-3">Chargeback Loss Calculator</h1>
+          <p className="text-lg text-slate-600 max-w-xl mx-auto">
             Find out how much your business could be losing to chargebacks every year — and what you can do about it.
           </p>
         </div>
@@ -72,7 +72,7 @@ export default function CalculatorPage() {
 
           {/* Input form */}
           <div className="card p-6 space-y-5">
-            <h2 className="text-base font-semibold text-ink">Enter your numbers</h2>
+            <h2 className="text-base font-semibold text-slate-900">Enter your numbers</h2>
 
             <div>
               <label className="label">Monthly Orders</label>
@@ -84,13 +84,13 @@ export default function CalculatorPage() {
                 onChange={e => { setOrders(e.target.value); setCalculated(false) }}
                 min="0"
               />
-              <p className="text-xs text-ink-tertiary mt-1.5">How many orders do you process per month?</p>
+              <p className="text-xs text-slate-500 mt-1.5">How many orders do you process per month?</p>
             </div>
 
             <div>
               <label className="label">Average Order Value (USD)</label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-tertiary text-sm">$</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">$</span>
                 <input
                   type="number"
                   className="input pl-7"
@@ -100,7 +100,7 @@ export default function CalculatorPage() {
                   min="0"
                 />
               </div>
-              <p className="text-xs text-ink-tertiary mt-1.5">Your typical order size in USD</p>
+              <p className="text-xs text-slate-500 mt-1.5">Your typical order size in USD</p>
             </div>
 
             <div>
@@ -116,9 +116,9 @@ export default function CalculatorPage() {
                   max="100"
                   step="0.1"
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-tertiary text-sm">%</span>
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">%</span>
               </div>
-              <p className="text-xs text-ink-tertiary mt-1.5">
+              <p className="text-xs text-slate-500 mt-1.5">
                 Industry average is ~0.5–1%. Card networks flag accounts over 1%.
               </p>
               {/* Common rates */}
@@ -127,7 +127,7 @@ export default function CalculatorPage() {
                   <button
                     key={v}
                     onClick={() => { setDisputeRate(v); setCalculated(false) }}
-                    className={`text-xs px-2.5 py-1 rounded-lg border transition-colors ${disputeRate === v ? 'bg-brand-50 border-brand-300 text-brand-700 font-semibold' : 'border-surface-border text-ink-secondary hover:border-brand-200'}`}
+                    className={`text-xs px-2.5 py-1 rounded-lg border transition-colors ${disputeRate === v ? 'bg-brand-50 border-brand-300 text-brand-700 font-semibold' : 'border-slate-200 text-slate-600 hover:border-brand-200'}`}
                   >
                     {v}%
                   </button>
@@ -152,33 +152,33 @@ export default function CalculatorPage() {
                 {/* Main result */}
                 <div className={`rounded-2xl border p-6 ${riskLevel.bg} ${riskLevel.border}`}>
                   <div className="flex items-start justify-between mb-3">
-                    <div className="text-sm font-semibold text-ink">Estimated Yearly Loss</div>
+                    <div className="text-sm font-semibold text-slate-900">Estimated Yearly Loss</div>
                     <span className={`text-xs font-bold px-2.5 py-1 rounded-full border ${riskLevel.bg} ${riskLevel.border} ${riskLevel.color}`}>
                       {riskLevel.label} Risk
                     </span>
                   </div>
-                  <div className="text-5xl font-bold text-ink mb-1 tabular-nums">{fmt(yearlyCost)}</div>
-                  <p className="text-sm text-ink-secondary">
+                  <div className="text-5xl font-bold text-slate-900 mb-1 tabular-nums">{fmt(yearlyCost)}</div>
+                  <p className="text-sm text-slate-600">
                     You could lose approximately <strong>{fmt(yearlyCost)}/year</strong> from chargebacks
                   </p>
-                  <p className="text-xs text-ink-tertiary mt-1">
+                  <p className="text-xs text-slate-500 mt-1">
                     That's {percentOfRevenue}% of your total annual revenue
                   </p>
                 </div>
 
                 {/* Breakdown */}
                 <div className="card p-5 space-y-3">
-                  <div className="text-sm font-semibold text-ink mb-1">Monthly Breakdown</div>
+                  <div className="text-sm font-semibold text-slate-900 mb-1">Monthly Breakdown</div>
                   {[
                     { label: 'Monthly disputes', val: Math.round(monthlyDisputes).toString(), sub: 'cases/mo' },
                     { label: 'Revenue at risk monthly', val: fmt(monthlyCost), sub: 'direct loss' },
                     { label: 'Bank fees monthly', val: fmt(monthlyDisputes * feePerDispute), sub: `~$${feePerDispute}/dispute` },
                   ].map(row => (
-                    <div key={row.label} className="flex items-center justify-between py-2 border-b border-surface-border last:border-0">
-                      <span className="text-sm text-ink-secondary">{row.label}</span>
+                    <div key={row.label} className="flex items-center justify-between py-2 border-b border-slate-200 last:border-0">
+                      <span className="text-sm text-slate-600">{row.label}</span>
                       <div className="text-right">
-                        <span className="text-sm font-semibold text-ink">{row.val}</span>
-                        <span className="text-xs text-ink-tertiary ml-1">{row.sub}</span>
+                        <span className="text-sm font-semibold text-slate-900">{row.val}</span>
+                        <span className="text-xs text-slate-500 ml-1">{row.sub}</span>
                       </div>
                     </div>
                   ))}
@@ -197,8 +197,8 @@ export default function CalculatorPage() {
                 {/* CTA */}
                 <div className="card p-6 text-center border-brand-200 bg-brand-50 dark:bg-brand-950/20">
                   <ShieldCheck className="w-10 h-10 text-brand-600 mx-auto mb-3" />
-                  <h3 className="font-bold text-ink text-lg mb-1">Protect Your Store</h3>
-                  <p className="text-sm text-ink-secondary mb-5">
+                  <h3 className="font-bold text-slate-900 text-lg mb-1">Protect Your Store</h3>
+                  <p className="text-sm text-slate-600 mb-5">
                     Chargeback Shield helps you organize disputes, build stronger cases, and recover more revenue — starting free.
                   </p>
                   <ul className="space-y-1.5 text-sm text-left mb-5">
@@ -209,7 +209,7 @@ export default function CalculatorPage() {
                     ].map(item => (
                       <li key={item} className="flex items-center gap-2">
                         <CheckCircle2 className="w-4 h-4 text-success-600 flex-shrink-0" />
-                        <span className="text-ink-secondary">{item}</span>
+                        <span className="text-slate-600">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -221,12 +221,12 @@ export default function CalculatorPage() {
               </>
             ) : (
               <div className="card p-10 flex flex-col items-center text-center gap-4">
-                <div className="w-16 h-16 bg-surface-tertiary rounded-2xl flex items-center justify-center">
-                  <TrendingDown className="w-8 h-8 text-ink-tertiary" />
+                <div className="w-16 h-16 bg-white-tertiary rounded-2xl flex items-center justify-center">
+                  <TrendingDown className="w-8 h-8 text-slate-500" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-ink mb-1">Your results will appear here</h3>
-                  <p className="text-sm text-ink-secondary">Fill in your numbers on the left to see your estimated annual chargeback exposure.</p>
+                  <h3 className="font-semibold text-slate-900 mb-1">Your results will appear here</h3>
+                  <p className="text-sm text-slate-600">Fill in your numbers on the left to see your estimated annual chargeback exposure.</p>
                 </div>
               </div>
             )}
