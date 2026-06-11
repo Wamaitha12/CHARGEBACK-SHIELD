@@ -14,18 +14,19 @@ module.exports = {
         display: ['var(--font-display)', 'system-ui', 'sans-serif'],
       },
       colors: {
+        // Shopify green palette — centred on #008060
         brand: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
-          950: '#172554',
+          50:  '#f2faf7',
+          100: '#dcf2ea',
+          200: '#b3e4d0',
+          300: '#7dcfb3',
+          400: '#3fb593',
+          500: '#009b73',
+          600: '#008060', // Shopify primary
+          700: '#006249',
+          800: '#004c3f', // Shopify dark
+          900: '#003328',
+          950: '#001a14',
         },
         surface: {
           DEFAULT: 'rgb(var(--color-surface) / <alpha-value>)',

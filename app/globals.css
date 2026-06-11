@@ -62,13 +62,13 @@ body {
 
 /* ─── Focus ring ──────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid #008060;
   outline-offset: 2px;
   border-radius: 4px;
 }
 
 /* ─── Selection ───────────────────────────────────────────── */
-::selection { background-color: #bfdbfe; color: #1e40af; }
+::selection { background-color: #b3e4d0; color: #004c3f; }
 
 /* ─── Component classes ───────────────────────────────────── */
 @layer components {
@@ -161,8 +161,8 @@ body {
   @apply bg-brand-50 text-brand-700;
 }
 .dark .sidebar-item.active {
-  background-color: rgb(30 58 138 / 0.35);
-  color: #93c5fd;
+  background-color: rgb(0 128 96 / 0.25);
+  color: #7dcfb3;
 }
 .sidebar-item.active svg   { @apply text-brand-600; }
-.dark .sidebar-item.active svg { color: #93c5fd; }
+.dark .sidebar-item.active svg { color: #7dcfb3; }

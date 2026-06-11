@@ -10,7 +10,13 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next({ request })
   }
 
-  let supabaseResponse = NextResponse.next({ request })
+  // Forward the pathname as a header so server components can read it
+  const requestHeaders = new Headers(request.headers)
+  requestHeaders.set('x-pathname', request.nextUrl.pathname)
+
+  let supabaseResponse = NextResponse.next({
+    request: { headers: requestHeaders },
+  })
 
   try {
     const supabase = createServerClient(supabaseUrl, supabaseKey, {
@@ -20,7 +26,9 @@ export async function middleware(request: NextRequest) {
         },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
-          supabaseResponse = NextResponse.next({ request })
+          supabaseResponse = NextResponse.next({
+            request: { headers: requestHeaders },
+          })
           cookiesToSet.forEach(({ name, value, options }) =>
             supabaseResponse.cookies.set(name, value, options)
           )
@@ -37,12 +45,6 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL('/dashboard', request.url))
     }
 
-    // Redirect unauthenticated users away from protected routes
-    // TEMPORARILY DISABLED for local development
-    // const protectedPaths = ['/dashboard', '/chargebacks', '/analytics', '/settings']
-    // if (!user && protectedPaths.some(p => pathname.startsWith(p))) {
-    //   return NextResponse.redirect(new URL('/auth/login', request.url))
-    // }
   } catch {
     // Auth check failed — allow the request through
   }

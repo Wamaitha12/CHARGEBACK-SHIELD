@@ -1,26 +1,38 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { CURRENCIES } from '@/lib/utils'
-import { Loader2, Save, Bell, Building2, Globe, Shield, ShoppingBag, Copy, Check, ExternalLink } from 'lucide-react'
+import { getTrialDaysLeft, getStatusLabel, isSubscriptionActive } from '@/lib/subscription'
+import {
+  Loader2, Save, Bell, Building2, Globe, Shield,
+  ShoppingBag, CheckCircle2, AlertCircle, Link2, Link2Off,
+  CreditCard, Zap,
+} from 'lucide-react'
 
 export default function SettingsPage() {
-  const [loading, setLoading] = useState(true)
-  const [saving, setSaving] = useState(false)
-  const [saved, setSaved] = useState(false)
+  const searchParams = useSearchParams()
+  const [loading, setLoading]   = useState(true)
+  const [saving, setSaving]     = useState(false)
+  const [saved, setSaved]       = useState(false)
+  const [shopDomain, setShopDomain] = useState('')
+  const [shopConnected, setShopConnected] = useState(false)
+  const [shopInput, setShopInput] = useState('')
+  const [billingProfile, setBillingProfile] = useState<any>(null)
+  const [managingBilling, setManagingBilling] = useState(false)
   const [form, setForm] = useState({
     business_name: '',
     currency: 'USD',
     email_notifications: true,
     dispute_reminders: true,
     monthly_reports: false,
-    shopify_domain: '',
   })
-  const [webhookUrl, setWebhookUrl] = useState('')
-  const [copied, setCopied] = useState(false)
 
   const supabase = createClient()
+
+  // Read shopify=connected / shopify=error from URL after OAuth redirect
+  const shopifyStatus = searchParams.get('shopify')
 
   useEffect(() => {
     const load = async () => {
@@ -38,38 +50,68 @@ export default function SettingsPage() {
           email_notifications: data.email_notifications ?? true,
           dispute_reminders: data.dispute_reminders ?? true,
           monthly_reports: data.monthly_reports ?? false,
-          shopify_domain: data.shopify_domain || '',
         })
+        if (data.shopify_domain) {
+          setShopDomain(data.shopify_domain)
+          setShopConnected(true)
+          setShopInput(data.shopify_domain)
+        }
+        setBillingProfile(data)
       }
       setLoading(false)
     }
     load()
-    setWebhookUrl(`${window.location.origin}/api/webhooks/shopify`)
   }, [])
 
   const set = (key: string, value: string | boolean) =>
     setForm((prev) => ({ ...prev, [key]: value }))
 
-  const copyWebhookUrl = () => {
-    navigator.clipboard.writeText(webhookUrl)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
-
   const handleSave = async () => {
     setSaving(true)
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
-
     await supabase.from('user_profiles').upsert({
       user_id: user.id,
       ...form,
       updated_at: new Date().toISOString(),
     })
-
     setSaving(false)
     setSaved(true)
     setTimeout(() => setSaved(false), 2500)
+  }
+
+  const handleConnectShopify = () => {
+    const domain = shopInput.trim().replace(/^https?:\/\//, '').replace(/\/$/, '')
+    if (!domain) return
+    // Ensure it ends with .myshopify.com
+    const shop = domain.includes('.myshopify.com') ? domain : `${domain}.myshopify.com`
+    window.location.href = `/api/shopify/connect?shop=${encodeURIComponent(shop)}`
+  }
+
+  const handleDisconnect = async () => {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return
+    await supabase.from('user_profiles').update({
+      shopify_domain: null,
+      shopify_access_token: null,
+    } as any).eq('user_id', user.id)
+    setShopDomain('')
+    setShopConnected(false)
+    setShopInput('')
+  }
+
+  const handleManageBilling = async () => {
+    setManagingBilling(true)
+    try {
+      const res = await fetch('/api/stripe/portal', { method: 'POST' })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      }
+    } catch {
+      // fall through
+    }
+    setManagingBilling(false)
   }
 
   if (loading) {
@@ -118,80 +160,86 @@ export default function SettingsPage() {
           </div>
           <div>
             <h2 className="font-semibold text-ink text-sm">Shopify Integration</h2>
-            <p className="text-xs text-ink-tertiary">Auto-import chargebacks when disputes open in your store</p>
+            <p className="text-xs text-ink-tertiary">Auto-import disputes directly from your store</p>
           </div>
-          {form.shopify_domain && (
-            <span className="ml-auto inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-success-50 text-success-700 border border-success-200 dark:bg-success-900/20 dark:border-success-800/50">
+          {shopConnected && (
+            <span className="ml-auto inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-success-50 text-success-700 border border-success-200">
               <span className="w-1.5 h-1.5 rounded-full bg-success-500" />
               Connected
             </span>
           )}
         </div>
 
-        {/* Store domain */}
-        <div>
-          <label className="label">Shopify Store Domain</label>
-          <input
-            type="text"
-            className="input"
-            placeholder="yourstore.myshopify.com"
-            value={form.shopify_domain}
-            onChange={(e) => set('shopify_domain', e.target.value.toLowerCase().trim())}
-          />
-          <p className="text-xs text-ink-tertiary mt-1.5">
-            Enter your .myshopify.com domain so we can match incoming webhooks to your account.
-          </p>
-        </div>
+        {/* OAuth success/error banners from redirect */}
+        {shopifyStatus === 'connected' && (
+          <div className="flex items-start gap-2 rounded-lg border border-success-200 bg-success-50 px-4 py-3 text-sm text-success-800">
+            <CheckCircle2 className="w-4 h-4 flex-shrink-0 mt-0.5 text-success-600" />
+            Shopify connected! Disputes will now auto-import whenever a new chargeback is filed.
+          </div>
+        )}
+        {shopifyStatus === 'error' && (
+          <div className="flex items-start gap-2 rounded-lg border border-danger-200 bg-danger-50 px-4 py-3 text-sm text-danger-800">
+            <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-danger-600" />
+            Connection failed. Make sure your store domain is correct and try again.
+          </div>
+        )}
 
-        {/* Webhook URL */}
-        <div>
-          <label className="label">Your Webhook URL</label>
-          <div className="flex gap-2">
-            <input
-              readOnly
-              value={webhookUrl}
-              className="input font-mono text-xs bg-surface-secondary"
-            />
+        {shopConnected ? (
+          /* ── Already connected state ── */
+          <div className="rounded-xl border border-success-200 bg-success-50 p-4 space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: '#008060' }}>
+                <ShoppingBag className="w-4 h-4 text-white" />
+              </div>
+              <div>
+                <div className="text-sm font-semibold text-ink">{shopDomain}</div>
+                <div className="text-xs text-ink-secondary">Disputes auto-import is active</div>
+              </div>
+            </div>
             <button
-              type="button"
-              onClick={copyWebhookUrl}
-              className="btn-secondary flex-shrink-0 gap-2"
+              onClick={handleDisconnect}
+              className="inline-flex items-center gap-1.5 text-xs text-danger-600 hover:text-danger-700 font-medium"
             >
-              {copied ? <Check className="w-4 h-4 text-success-600" /> : <Copy className="w-4 h-4" />}
-              {copied ? 'Copied' : 'Copy'}
+              <Link2Off className="w-3.5 h-3.5" />
+              Disconnect store
             </button>
           </div>
-        </div>
+        ) : (
+          /* ── Not connected state ── */
+          <div className="space-y-4">
+            <div>
+              <label className="label">Your Shopify store domain</label>
+              <input
+                type="text"
+                className="input"
+                placeholder="yourstore.myshopify.com"
+                value={shopInput}
+                onChange={(e) => setShopInput(e.target.value.toLowerCase().trim())}
+                onKeyDown={(e) => e.key === 'Enter' && handleConnectShopify()}
+              />
+              <p className="text-xs text-ink-tertiary mt-1.5">
+                Enter your <code className="bg-surface-secondary px-1 rounded">.myshopify.com</code> domain
+              </p>
+            </div>
 
-        {/* Setup steps */}
-        <div className="rounded-xl border border-surface-border bg-surface-secondary p-4 space-y-3">
-          <p className="text-xs font-semibold text-ink uppercase tracking-wider">Setup instructions</p>
-          <ol className="space-y-2.5 text-xs text-ink-secondary">
-            {[
-              <>Enter your store domain above and click <strong className="text-ink">Save Settings</strong>.</>,
-              <>In your Shopify admin, go to <strong className="text-ink">Settings → Notifications → Webhooks</strong>.</>,
-              <>Click <strong className="text-ink">Create webhook</strong>. Set event to <strong className="text-ink">Dispute created</strong>, format to <strong className="text-ink">JSON</strong>, and paste the webhook URL above.</>,
-              <>Copy the <strong className="text-ink">webhook signing secret</strong> Shopify shows you and add it to your server as <code className="bg-surface-tertiary px-1 rounded">SHOPIFY_WEBHOOK_SECRET</code>.</>,
-              <>From now on, every new dispute in your Shopify store will appear automatically in Chargeback Shield.</>,
-            ].map((step, i) => (
-              <li key={i} className="flex gap-2.5">
-                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-brand-100 dark:bg-brand-900/40 text-brand-700 dark:text-brand-400 text-xs font-bold flex items-center justify-center">
-                  {i + 1}
-                </span>
-                <span className="pt-0.5">{step}</span>
-              </li>
-            ))}
-          </ol>
-          <a
-            href="https://help.shopify.com/en/manual/orders/chargebacks"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-xs text-brand-600 hover:underline mt-1"
-          >
-            Shopify chargeback docs
-            <ExternalLink className="w-3 h-3" />
-          </a>
-        </div>
+            <button
+              onClick={handleConnectShopify}
+              disabled={!shopInput}
+              className="w-full flex items-center justify-center gap-2.5 py-3 rounded-xl font-semibold text-sm text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{ background: shopInput ? '#008060' : undefined, backgroundColor: shopInput ? '#008060' : '#94a3b8' }}
+            >
+              <svg width="18" height="18" viewBox="0 0 109 124" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M74.7 14.8s-.3 0-.8.2c-.1 0-.2-.1-.3-.1-4.7-.1-8.2 3.6-9.4 9.4-.1.4-.1.8-.1 1.2-2.6.8-5.5 1.7-8.5 2.6-2.4-6.4-6.6-9.8-11.4-9.8h-.5C42.3 17 40.8 16 39.4 16c-10.5 0-15.6 13.2-17.2 19.9l-7.3 2.3c-2.3.7-2.3.7-2.6 2.9L4 99.2l55.4 9.8 30-6.5L74.7 14.8zm-14 12.9c-2.1.6-4.3 1.3-6.6 2-.5-3.1-1.4-5.8-2.8-7.9 3.5.7 6 3.7 9.4 5.9zm-12.3-5.4c1.9 2 3.1 4.9 3.6 9.1-2.9.9-6.1 1.9-9.3 2.9 1.8-6.8 5.2-11.7 5.7-12zm-6.4-.9c.4 0 .7.1 1 .2-.9.4-1.8 1-2.6 1.9-5.2 5.6-9.2 14.5-10.7 25.3l-8.1 2.5C23.3 39.8 28.7 21.4 42 21.4z" fill="white"/>
+                <path d="M88.2 35.9c-.5 0-10 .2-10 .2s-7.9-7.7-8.7-8.5c-.1-.1-.2-.1-.3-.2L59.4 109l30-6.5L102 36.8c-.8-.5-13.3-.9-13.8-.9z" fill="white" opacity="0.6"/>
+              </svg>
+              Connect with Shopify
+            </button>
+
+            <p className="text-xs text-center text-ink-tertiary">
+              You'll be redirected to Shopify to approve the connection — no tokens or copying needed.
+            </p>
+          </div>
+        )}
       </section>
 
       {/* Currency */}
@@ -258,24 +306,101 @@ export default function SettingsPage() {
         </div>
       </section>
 
+      {/* Billing */}
+      <section className="card p-6 space-y-5">
+        <div className="flex items-center gap-3 pb-1 border-b border-surface-border">
+          <div className="w-8 h-8 bg-brand-50 rounded-lg flex items-center justify-center">
+            <CreditCard className="w-4 h-4 text-brand-600" />
+          </div>
+          <div>
+            <h2 className="font-semibold text-ink text-sm">Billing & Subscription</h2>
+            <p className="text-xs text-ink-tertiary">Manage your plan and payment details</p>
+          </div>
+        </div>
+
+        {billingProfile && (() => {
+          const active = isSubscriptionActive(billingProfile)
+          const statusLabel = getStatusLabel(billingProfile)
+          const daysLeft = getTrialDaysLeft(billingProfile.trial_started_at)
+          const isActive = billingProfile.subscription_status === 'active'
+
+          return (
+            <div className="space-y-4">
+              {/* Status badge */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-sm font-medium text-ink">Current plan</div>
+                  <div className="text-xs text-ink-tertiary mt-0.5">
+                    {isActive ? 'Pro — $29/month' : 'Free trial'}
+                  </div>
+                </div>
+                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${
+                  isActive
+                    ? 'bg-success-50 text-success-700 border-success-200'
+                    : active
+                    ? 'bg-amber-50 text-amber-700 border-amber-200'
+                    : 'bg-danger-50 text-danger-700 border-danger-200'
+                }`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${
+                    isActive ? 'bg-success-500' : active ? 'bg-amber-500' : 'bg-danger-500'
+                  }`} />
+                  {statusLabel}
+                </span>
+              </div>
+
+              {/* Trial progress bar */}
+              {!isActive && active && (
+                <div>
+                  <div className="flex justify-between text-xs text-ink-tertiary mb-1.5">
+                    <span>Trial progress</span>
+                    <span>{daysLeft} day{daysLeft === 1 ? '' : 's'} remaining</span>
+                  </div>
+                  <div className="h-1.5 rounded-full bg-surface-border overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-amber-400 transition-all"
+                      style={{ width: `${Math.max(5, (daysLeft / 3) * 100)}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Action buttons */}
+              {isActive ? (
+                <button
+                  onClick={handleManageBilling}
+                  disabled={managingBilling}
+                  className="btn-secondary inline-flex items-center gap-2 text-sm"
+                >
+                  {managingBilling
+                    ? <Loader2 className="w-4 h-4 animate-spin" />
+                    : <CreditCard className="w-4 h-4" />
+                  }
+                  {managingBilling ? 'Loading...' : 'Manage billing'}
+                </button>
+              ) : (
+                <a
+                  href="/upgrade"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-white transition-all"
+                  style={{ background: '#008060' }}
+                >
+                  <Zap className="w-4 h-4" />
+                  {active ? 'Upgrade now' : 'Subscribe to restore access'}
+                </a>
+              )}
+            </div>
+          )
+        })()}
+      </section>
+
       {/* Save */}
       <div className="flex justify-end">
         <button onClick={handleSave} disabled={saving} className="btn-primary px-8">
           {saving ? (
-            <>
-              <Loader2 className="w-4 h-4 animate-spin" />
-              Saving...
-            </>
+            <><Loader2 className="w-4 h-4 animate-spin" />Saving...</>
           ) : saved ? (
-            <>
-              <span className="text-green-100">✓</span>
-              Saved!
-            </>
+            <><CheckCircle2 className="w-4 h-4 text-green-100" />Saved!</>
           ) : (
-            <>
-              <Save className="w-4 h-4" />
-              Save Settings
-            </>
+            <><Save className="w-4 h-4" />Save Settings</>
           )}
         </button>
       </div>
@@ -284,15 +409,9 @@ export default function SettingsPage() {
 }
 
 function ToggleSetting({
-  label,
-  description,
-  checked,
-  onChange,
+  label, description, checked, onChange,
 }: {
-  label: string
-  description: string
-  checked: boolean
-  onChange: (v: boolean) => void
+  label: string; description: string; checked: boolean; onChange: (v: boolean) => void
 }) {
   return (
     <div className="flex items-center justify-between gap-4">
@@ -308,11 +427,7 @@ function ToggleSetting({
           checked ? 'bg-brand-600' : 'bg-surface-border'
         }`}
       >
-        <span
-          className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition-transform ${
-            checked ? 'translate-x-6' : 'translate-x-1'
-          }`}
-        />
+        <span className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition-transform ${checked ? 'translate-x-6' : 'translate-x-1'}`} />
       </button>
     </div>
   )

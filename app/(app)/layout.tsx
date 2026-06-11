@@ -1,21 +1,53 @@
-import { redirect } from 'next/navigation'
+import { headers } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
+import { isSubscriptionActive } from '@/lib/subscription'
 import Sidebar from '@/components/layout/Sidebar'
 import TopBar from '@/components/layout/TopBar'
+import { redirect } from 'next/navigation'
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser().catch(() => ({ data: { user: null } }))
 
-  // TEMPORARILY DISABLED for local development
-  // if (!user) {
-  //   redirect('/auth/login')
-  // }
+  // Try to get the user — if this fails or returns null, let the client pages
+  // handle auth themselves (they all check session client-side)
+  let user: any = null
+  let profile: any = null
 
-  // Get user profile
-  const { data: profile } = user
-    ? await supabase.from('user_profiles').select('*').eq('user_id', user.id).single()
-    : { data: null }
+  try {
+    const { data: { user: u } } = await supabase.auth.getUser()
+    user = u
+
+    if (user) {
+      const { data } = await supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single()
+      profile = data
+
+      // Backfill trial_started_at for users who don't have it yet
+      if (profile && !profile.trial_started_at) {
+        await supabase
+          .from('user_profiles')
+          .update({ trial_started_at: new Date().toISOString(), subscription_status: 'trialing' })
+          .eq('user_id', user.id)
+        profile = { ...profile, trial_started_at: new Date().toISOString(), subscription_status: 'trialing' }
+      }
+
+      // Subscription gate — only enforce when we confidently have a profile
+      // and the trial/subscription columns exist (profile.subscription_status !== undefined)
+      const headersList = headers()
+      const pathname = headersList.get('x-pathname') || ''
+      const isUpgradePage = pathname.includes('/upgrade')
+
+      const hasSubscriptionData = profile?.subscription_status !== undefined
+      if (!isUpgradePage && hasSubscriptionData && !isSubscriptionActive(profile)) {
+        redirect('/upgrade')
+      }
+    }
+  } catch {
+    // Server-side auth failed — let client pages handle it gracefully
+  }
 
   return (
     <div className="flex h-screen bg-surface-secondary overflow-hidden">
