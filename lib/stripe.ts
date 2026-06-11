@@ -1,6 +1,4 @@
-import Stripe from 'stripe'
-
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-06-20' as any,
-  typescript: true,
-})
+// Stripe has been replaced by Dodo Payments.
+// This file is kept as a placeholder to avoid import errors.
+// See lib/dodopayments.ts for the active billing integration.
+export {}
