@@ -197,7 +197,7 @@ export default function LandingPage() {
               Built for Shopify merchants &amp; online businesses
             </div>
 
-            <h1 className="text-5xl md:text-6xl font-bold text-ink leading-[1.08] tracking-tight mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-slate-900 leading-[1.08] tracking-tight mb-6">
               Stop Chargebacks From{' '}
               <span className="relative inline-block text-brand-600">
                 Quietly Draining
@@ -208,7 +208,7 @@ export default function LandingPage() {
               Your Store Revenue
             </h1>
 
-            <p className="text-xl text-ink-secondary leading-relaxed mb-8 max-w-2xl">
+            <p className="text-lg sm:text-xl text-slate-600 leading-relaxed mb-8 max-w-2xl">
               Lost products, shipping costs, processing fees, and missed deadlines add up fast.
               Chargeback Shield gives you visibility into every dispute before small losses become expensive problems.
             </p>
@@ -222,10 +222,10 @@ export default function LandingPage() {
               </Link>
             </div>
 
-            <p className="text-sm text-ink-tertiary">
+            <p className="text-sm text-slate-500">
               No credit card required · Setup in minutes · Built for Shopify merchants
             </p>
-            <p className="text-sm text-ink-tertiary mt-1.5">
+            <p className="text-sm text-slate-500 mt-1.5">
               Not sure of your exposure?{' '}
               <Link href="/calculator" className="text-brand-600 font-medium hover:underline underline-offset-2">
                 Calculate your yearly chargeback loss →
